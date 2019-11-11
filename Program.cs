@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -41,6 +41,7 @@ namespace Billiards
 
     public class BilliardTestCase : TestCase
     {
+
         private readonly double expectedFinalDirection;
         private readonly double initialDirection;
         private readonly double wallInclination;
@@ -62,9 +63,9 @@ namespace Billiards
                 -100 * Math.Sin(wallInclination), new Pen(Color.Black, 1));
             ui.Line(-50 * Math.Cos(initialDirection), 50 * Math.Sin(initialDirection), 0, 0, new Pen(Color.Red, 3));
             ui.Line(50 * Math.Cos(angle), -50 * Math.Sin(angle), 0, 0,
-                new Pen(Color.Red, 3) {DashStyle = DashStyle.Dash});
+                new Pen(Color.Red, 3) { DashStyle = DashStyle.Dash });
             ui.Line(50 * Math.Cos(expectedFinalDirection), -50 * Math.Sin(expectedFinalDirection), 0, 0,
-                new Pen(Color.Green, 1) {DashStyle = DashStyle.Dash});
+                new Pen(Color.Green, 1) { DashStyle = DashStyle.Dash });
         }
 
         protected override bool InternalRun()
@@ -80,26 +81,28 @@ namespace Billiards
         {
             return radians * 180 / Math.PI + "°";
         }
-    }
-    public static double BounceWall(double directionRadians, double wallInclinationRadians)
-    {
-        double direction = (directionRadians * 180) / Math.PI;
-        double wallInclination = (wallInclinationRadians * 180) / Math.PI;
 
-        double wallAngle = 90 + wallInclination;
-        double ballAngle = 180 + direction;
-
-        double diff = wallAngle - ballAngle;
-        double angle = ballAngle + 2 * diff + 360 * 5;
-
-        angle %= 360;
-        if (angle > 180)
+        public static double BounceWall(double directionRadians, double wallInclinationRadians)
         {
-            angle -= 360;
+            double direction = (directionRadians * 180) / Math.PI;
+            double wallInclination = (wallInclinationRadians * 180) / Math.PI;
+
+            double wallAngle = 90 + wallInclination;
+            double ballAngle = 180 + direction;
+
+            double diff = wallAngle - ballAngle;
+            double angle = ballAngle + 2 * diff + 360 * 5;
+
+            angle %= 360;
+            if (angle > 180)
+            {
+                angle -= 360;
+            }
+
+            return (angle * Math.PI) / 180;
+
         }
-
-        return (angle * Math.PI) / 180;
-
     }
+        
 }
         
